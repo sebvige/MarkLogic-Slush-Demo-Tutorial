@@ -1,1 +1,0 @@
-# MarkLogic-Slush-Demo-Tutorial
