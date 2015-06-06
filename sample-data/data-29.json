@@ -1,0 +1,15 @@
+{
+  "prodid": 3,
+  "isActive": false,
+  "Product-Name": "Real-Estate Finance - First Property",  
+  "Product-Family": "Credit",
+  "about": "Special Real-Estate credit offer for first acquisition.\r\n",
+  "tags": [
+    "Insurance Included",
+    "Real-Estate",
+    "Primary Residence",
+	"Long-Repayment Timeframe",
+	"Fixed Rate"
+  ],
+  "Income Eligibility":"27000" 
+}

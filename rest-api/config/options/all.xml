@@ -68,7 +68,6 @@
       <search:facet-option>descending</search:facet-option>
     </search:range>
   </search:constraint>
-
   <!-- example facet constraint below -->
   <!--
   <search:constraint name="myconstraint">

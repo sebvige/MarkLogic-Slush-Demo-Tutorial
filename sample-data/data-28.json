@@ -1,0 +1,13 @@
+{
+  "prodid": 4,
+  "isActive": false,
+  "Product-Name": "Credit-Card - Visa",  
+  "Product-Family": "Credit-Card",
+  "about": "Free Credit Card.\r\n",
+  "tags": [
+    "Insurance Included",
+    "Free",
+    "Travel"
+  ],
+  "Income Eligibility":"27000" 
+}

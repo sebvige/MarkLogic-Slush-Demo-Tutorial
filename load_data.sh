@@ -1,0 +1,1 @@
+. ./mlcp-Hadoop2-1.3-2/bin/mlcp.sh import -username admin -password admin -host localhost -port 8041 -input_file_path ./sample-data -document_type text -transform_module /transform/from-json.xqy  -transform_namespace "http://marklogic.com/transform/from-json"  -transform_function transform
