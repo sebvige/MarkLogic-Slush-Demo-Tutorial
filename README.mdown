@@ -1,0 +1,171 @@
+This process has for objective to help MarkLogic newbies to get a first basic application up & running.
+
+This is based on the very good marklogic-slush-node that you can find on https://github.com/marklogic/slush-marklogic-node
+
+
+The idea is to start from scratch 
+
+You will need a computer with Virtualbox / VM ware 
+
+First install CentOS 6 as a VM machine - create a user called 'ml'
+CentOs can be found here : http://isoredirect.centos.org/centos/6/isos/x86_64/
+
+
+OS requirement - a Marklogic supported Linux OS - we used CentOS 6
+
+
+
+Then install marklogic following standard procedure: https://docs.marklogic.com/guide/installation/procedures#id_28962
+==> follow the redhat instructions (very straightforward)  
+
+CentOS binary rpm can be found here:
+http://developer.marklogic.com/download/binaries/8.0/MarkLogic-8.0-3.x86_64.rpm
+
+to start marklogic for the first time - 2 options :
+
+either reboot the machine
+
+or /etc/init.d/MarkLogic start 
+
+Then follow documented ML server initialisation  on www.marklogic.com
+
+you should use admin/admin as ML administrator user/pwd (this is what we refer to later on)
+
+
+Then do the following operations:
+
+0. as root create the following directory /appml
+cd /
+mkdir appml
+chown -R ml:ml appml
+ 
+disable firewall
+
+
+1. Run as root
+sudo -i
+
+
+2. Update the system
+yum update
+yum install gcc-c++ patch readline readline-devel zlib zlib-devel
+yum install libyaml-devel libffi-devel openssl
+yum install bzip2 autoconf automake libtool bison iconv-devel
+
+3. Install Ruby (if not already there), and make sure it is the latest version
+yum install ruby
+
+3.1 Exit root
+exit
+gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+curl -L get.rvm.io | bash -s stable
+source /home/<loged in user>/.rvm/scripts/rvm
+rvm install 2.2.2
+rvm use 2.2.2 --default
+
+3.2 Back as root
+sudo -i
+
+4. Install git (still as root)
+yum install git
+
+5.  Install Node (still as root)
+curl -sL https://rpm.nodesource.com/setup | bash -
+yum install -y nodejs
+npm install -g npm
+npm version
+
+output:
+{ npm: '2.11.0',
+  ares: '1.9.0-DEV',
+  http_parser: '1.0',
+  modules: '11',
+  node: '0.10.38',
+  openssl: '1.0.1m',
+  uv: '0.10.36',
+  v8: '3.14.5.9',
+  zlib: '1.2.8' }
+
+6. Install bower (still as root)
+npm install -g bower
+
+7. Install gulp (still as root)
+ npm install --global gulp
+
+8. Install slush (still as root)
+npm install -g slush
+
+9. Install generator (use a newer version and still as root)
+npm install -g git://github.com/marklogic/slush-marklogic-node.git
+
+10. Exit as root
+exit
+
+10.1 - as your ml user (linux user) 
+
+11. Initiate the application
+npm install less
+slush marklogic-node test-app
+
+This is my choices
+[slush] Using slushfile /usr/lib/node_modules/slush-marklogic-node/slushfile.js
+[08:24:19] Starting 'marklogic-node:init'...
+[?] Name for the app? <your appname>
+[?] MarkLogic version? 8
+[?] Roxy App Type? rest
+[?] Roxy Branch? dev
+[?] Include ESRI Maps? No
+
+12. Do the configuration changes
+$ cd {app-name}
+edit deploy/build.properties; set the -port properties to available ports (defaults: 8040, 8041)
+
+Change IP address ==> to your local ip address - should ideally be afixed address
+
+13. Boostratp
+./ml local bootstrap
+
+then rename the folder test-app to test-app_ootb
+
+
+
+then here we want to use the app in this procedure
+Download the app content as zip file at this location: https://github.com/sebvige/MarkLogic-Slush-Demo-Tutorial/archive/master.zip
+
+Transfer it to your linux vm using winscp or ftp client of your choice I use http://winscp.net/download/winscp573setup.exe
+target folder is /appml
+
+cd /appml
+unzip MarkLogic-Slush-Demo-Tutorial-master.zip
+
+ls -ltr shows a folder called MarkLogic-Slush-Demo-Tutorial-master
+
+rename the folder to test-app
+
+mv MarkLogic-Slush-Demo-Tutorial-master test-app
+
+
+
+14. Deploy modules
+./ml local deploy modules
+
+15.change the gulpfile.js and then run gulp, you can kill it when it is finished with default
+gulp
+
+16. gulp server
+
+from there you should be able to test the app from http://<centos box ip address>:9070
+
+and get something looking like what is shown in the viewlet contained in viewlet.zip (that you can watch from your win box (flash))
+
+17. loading data
+cd /appml/test-app
+./load_data.sh
+
+
+18. from http://<vm ip address>:9070 
+login as admin/admin  
+
+you should see data in the result page
+
+
